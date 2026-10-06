@@ -9,7 +9,6 @@ import { animated, useSpring } from "@react-spring/three";
 import { create } from "zustand";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { easing } from "maath";
 import { motion } from "framer-motion";
 import { World } from "miniplex";
 
@@ -74,7 +73,7 @@ function EntityRegistry() {
 }
 
 function PulseRing({ pulse }: { pulse: number }) {
-  const ref = useRef<THREE.Mesh>(null!);
+  const ref = useRef<THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>>(null!);
 
   useFrame((_, delta) => {
     ref.current.scale.lerp(new THREE.Vector3(1.8, 1.8, 1), delta * 5);
@@ -103,8 +102,8 @@ function Core() {
 
   useFrame((_, delta) => {
     ref.current.rotation.y += delta * (0.7 + spring.rotation.get() * 0.15);
-    ref.current.rotation.x = easing.damp(ref.current.rotation.x, active ? 0.25 : 0, 4, delta);
-    ref.current.rotation.z = easing.damp(ref.current.rotation.z, spring.rotation.get() * 0.2, 4, delta);
+    ref.current.rotation.x = THREE.MathUtils.damp(ref.current.rotation.x, active ? 0.25 : 0, 4, delta);
+    ref.current.rotation.z = THREE.MathUtils.damp(ref.current.rotation.z, spring.rotation.get() * 0.2, 4, delta);
   });
 
   const bind = useGesture({

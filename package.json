@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-spring/three": "latest",
     "@react-three/drei": "latest",
     "@react-three/fiber": "latest",
     "@react-three/postprocessing": "latest",
